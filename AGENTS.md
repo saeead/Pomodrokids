@@ -1,67 +1,88 @@
 # AGENTS Guidelines for Pomodoro Kids (پومودرو کیدز)
 
 ## Introduction
-Pomodoro Kids (پومودرو کیدز) is a professional-grade Windows desktop application designed to help 12-year-old users manage their study, gaming, and internet time. The application utilizes the Pomodoro technique, breaking tasks into focused blocks and rest periods. It features task profiles (Study, Gaming, etc.), audio-visual notifications, a comprehensive scoring system for discipline, and a parent-controlled reward module. This document serves as the primary instruction set for AI coding agents to ensure consistency in architecture, UI/UX design, and code quality.
+Welcome to the **Pomodoro Kids** project. This software is a dedicated Windows application designed for 12-year-olds to manage study, gaming, and internet time effectively. It features a sophisticated Pomodoro-style timer, task profiling, a gamified scoring system, and parental reward controls. 
+
+As an AI coding agent, your role is to maintain, expand, and optimize this application while strictly adhering to the architectural principles and UI/UX standards defined in this document.
+
+---
 
 ## UI/UX Guidelines
-The application must blend the sophisticated aesthetic of **Apple's Human Interface Guidelines (HIG)** with a playful, child-friendly **Minecraft/Gaming theme**.
+The project follows a unique hybrid aesthetic: **Apple Human Interface Guidelines (HIG)** principles applied to a **Gaming/Minecraft-inspired** theme.
 
-### Core Principles:
-*   **Apple HIG Influence**: 
-    *   **Transparency & Depth**: Use "Mica" or "Acrylic" effects (glassmorphism) for window backgrounds.
-    *   **Corner Radius**: Large, consistent rounded corners (typically 12px to 20px) for all containers and buttons.
-    *   **Typography**: Use clean, sans-serif fonts (e.g., Segoe UI Variable or San Francisco) with clear hierarchy.
-    *   **Spacing**: Generous white space (padding) to avoid a cluttered look.
-*   **Gaming/Minecraft Elements**:
-    *   **Iconography**: Use pixel-art inspired icons or high-quality 3D renders similar to game assets for task types (Pickaxe for "Work", Controller for "Game").
-    *   **Gamification**: Visual progress bars and XP-style counters for the scoring system.
-    *   **Color Palette**: Vibrant but balanced colors. Use "Emerald Green" for success/study, "Redstone Red" for alerts, and "Diamond Blue" for rest periods.
-*   **Components**: Use the components from `PySide6-FluentUI-QML` to achieve the transparent, modern Windows look.
+### Core Principles
+1.  **Glassmorphism & Depth:** Utilize transparency, background blur (Acrylic/Mica effects), and subtle drop shadows to create a sense of layers and depth, consistent with Apple HIG.
+2.  **Child-Friendly Interface:** While professional, the UI must feel like a game. Use high-quality icons, vibrant accents (Minecraft Green, Diamond Blue, Gold), and rounded corners (minimum 12px).
+3.  **Visual Hierarchy:** Large, readable typography for timers and clear, playful buttons for primary actions (Start, Pause, Switch Profile).
+4.  **Feedback:** Every action must provide visual or auditory feedback. Use smooth transitions for opening sub-menus.
+
+### Component Styling
+-   **Transparency:** Use semi-transparent backgrounds for panels to show the wallpaper or underlying layers.
+-   **Typography:** Use clean, sans-serif fonts (e.g., Segoe UI Variable or San Francisco) but allow for "pixel-style" headers if it fits the Minecraft theme.
+-   **References:** Refer to `PySide6-FluentUI-QML` for layout logic and `CustomTkinter` for modern widget styling.
+
+---
 
 ## Dev Environment Tips
-*   **Python Version**: Use Python 3.10+ for modern type hinting and performance.
-*   **Virtual Environment**: Always use a virtual environment (`venv` or `conda`).
-*   **GUI Framework**: Primary framework is **PySide6** (Qt for Python). 
-*   **Dependency Management**: Use a `requirements.txt` file.
-*   **Environment Variables**: Use a `.env` file for any local configurations or paths, ensuring it is ignored by git.
-*   **Windows Specifics**: Ensure `pywin32` is utilized if deep Windows integration (like taskbar progress bars or native notifications) is required.
+### Incremental Development & Code Integrity
+-   **Strict Rule:** Modify only the requested components or logic.
+-   **Preservation:** Never delete, overwrite, or ignore existing features unless explicitly instructed.
+-   **Granular Updates:** When updating the UI or a specific function, ensure the rest of the application's logic remains functional. Provide "diffs" or specific file updates to avoid breaking the codebase.
+
+### Software Architecture
+-   **OOP Focus:** Every component must be an object. Use classes for Windows, Widgets, and Logic Controllers.
+-   **Modular Structure:** Maintain the following organization:
+    -   `/assets`: Images, sounds (Minecraft-style clicks), and fonts.
+    -   `/components`: Reusable UI elements (Buttons, Timers, Progress Bars).
+    -   `/services`: Background logic (Timer threads, Notification handlers).
+    -   `/utils`: Helper functions (File I/O for settings, Time formatting).
+    -   `/data`: Local storage for profiles and scoring (JSON or SQLite).
+
+---
 
 ## Testing Instructions
-*   **Unit Testing**: Use `pytest` for logic-related functions (scoring calculations, timer logic).
-*   **UI Testing**: Perform manual "Monkey Testing" on the UI to ensure window transparency doesn't interfere with readability.
-*   **Integration Testing**: Verify that profile settings (JSON/SQLite) correctly persist after application restart.
-*   **Notification Test**: Trigger test pop-ups and audio alerts to ensure they don't get blocked by Windows "Focus Assist."
-*   **Command**: Run `pytest tests/` before proposing any changes to the core logic.
+Before finalizing any task, ensure the following:
+1.  **Unit Testing:** Run `pytest` on core logic (e.g., scoring math, timer calculations).
+2.  **UI Verification:** Manually verify that windows are responsive and transparency effects do not hinder readability.
+3.  **Notification Test:** Trigger a dummy pop-up and audio alert to ensure system-level integration is working.
+4.  **Edge Cases:** Test the timer behavior when the computer goes to sleep or when switching profiles mid-session.
+
+---
 
 ## PR Instructions
-*   **Branching Strategy**: Use feature branches (e.g., `feature/minecraft-theme`, `fix/timer-logic`).
-*   **Commit Messages**: Follow Conventional Commits (e.g., `feat: add parent reward panel`, `fix: resolve memory leak in audio player`).
-*   **Documentation**: Every PR must update the `README.md` if new features are added.
-*   **Review Checklist**:
-    *   Does the code follow PEP 8?
-    *   Are the UI elements responsive to window resizing?
-    *   Is the scoring logic protected against manual tampering?
+When submitting or suggesting changes:
+-   **Branching:** Use descriptive names like `feature/minecraft-theme` or `fix/timer-logic`.
+-   **Commit Messages:** Use clear, concise messages (e.g., "Add: Parent reward configuration panel").
+-   **Description:** Briefly explain *what* changed and *why*, specifically noting if any dependencies were added.
+-   **Code Review Checklist:** Ensure no existing features are broken and the OOP principles are upheld.
+
+---
 
 ## Coding Conventions
-*   **Styling**: Strictly adhere to **PEP 8**.
-*   **Type Hinting**: Mandatory for all function signatures (e.g., `def calculate_score(points: int) -> bool:`).
-*   **Modularity**: Keep UI logic (View) separate from Pomodoro logic (Controller) and Data (Model).
-*   **Resource Handling**: Use QRC files for managing images, icons, and audio assets in PySide6.
-*   **Error Handling**: Use `try-except` blocks for file I/O and sound playback to prevent application crashes.
-*   **Comments**: Use Google-style docstrings for all classes and public methods.
+-   **Python Standard:** Follow **PEP 8** strictly.
+-   **Naming:** 
+    -   Classes: `PascalCase` (e.g., `PomodoroTimer`).
+    -   Functions/Variables: `snake_case` (e.g., `calculate_score`).
+    -   Constants: `UPPER_SNAKE_CASE`.
+-   **Documentation:** Every class and public method must have a Docstring explaining its purpose and parameters.
+-   **UI Logic Separation:** Keep the UI code (view) separate from the business logic (controller).
+
+---
 
 ## Useful Commands Recap
 
 | Command | Description |
 | :--- | :--- |
-| `python -m venv venv` | Create a virtual environment |
-| `pip install -r requirements.txt` | Install project dependencies |
-| `python main.py` | Run the application |
-| `pytest` | Run the test suite |
-| `pyside6-rcc resources.qrc -o resources_rc.py` | Compile Qt resources |
-| `black .` | Auto-format code to PEP 8 |
+| `pip install -r requirements.txt` | Install necessary dependencies. |
+| `python main.py` | Run the main application. |
+| `pytest` | Run the test suite. |
+| `black .` | Format code to PEP 8 standards. |
+| `pyside6-rcc resources.qrc -o resources_rc.py` | Compile Qt resources (if using PySide6). |
+
+---
 
 ## Reference Material
-The following repositories should be used as structural and aesthetic references:
-*   [PySide6-FluentUI-QML](https://github.com/zhuzichu520/PySide6-FluentUI-QML): Primary reference for the Apple-style/Fluent UI implementation in PySide6.
-*   [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter): Secondary reference for modern UI components and theme handling.
+For implementation inspiration and library-specific patterns, refer to:
+-   [PySide6-FluentUI-QML](https://github.com/zhuzichu520/PySide6-FluentUI-QML) - For advanced UI layouts and transparency.
+-   [CustomTkinter](https://github.com/TomSchimansky/CustomTkinter) - For modern, rounded-corner widget implementations in Python.
+-   [Apple HIG - Visual Design](https://developer.apple.com/design/human-interface-guidelines/visual-design) - For depth and vibrancy standards.
