@@ -12,8 +12,13 @@ def main() -> None:
     """Create app controller and launch main window."""
 
     app_controller = AppController(storage_path=Path("data/app_state.json"))
+    profiles = app_controller.list_profiles()
 
-    window = MainWindow(on_start_clicked=lambda: window.set_status(app_controller.run_demo_session()))
+    window = MainWindow(
+        profiles=profiles,
+        on_start_clicked=app_controller.run_profile_session,
+        on_save_profile=app_controller.upsert_profile,
+    )
     window.run()
 
 
