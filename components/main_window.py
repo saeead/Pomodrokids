@@ -7,6 +7,7 @@ from tkinter import ttk
 from typing import Callable, Dict, List, Tuple
 
 from data.models import Period, ScoreSnapshot, TaskProfile
+from utils.app_meta import APP_NAME, APP_UI_VERSION
 
 
 class MainWindow:
@@ -29,7 +30,7 @@ class MainWindow:
         self.profile_map: Dict[str, TaskProfile] = {item.title: item for item in profiles}
 
         self.root = tk.Tk()
-        self.root.title("Mine-Pomodoro")
+        self.root.title(f"{APP_NAME} | {APP_UI_VERSION}")
         self.root.geometry("1180x700")
         self.root.minsize(1100, 640)
         self.root.configure(bg="#88AEE8")
@@ -79,7 +80,7 @@ class MainWindow:
 
         header = ttk.Frame(root_frame, style="Glass.TFrame", padding=(16, 8))
         header.pack(fill=tk.X)
-        ttk.Label(header, text="MINE-POMODORO", style="MineTitle.TLabel").pack(side=tk.LEFT)
+        ttk.Label(header, text=f"MINE-POMODORO  [{APP_UI_VERSION}]", style="MineTitle.TLabel").pack(side=tk.LEFT)
         ttk.Button(header, text="🔔 Notifications", style="Save.TButton").pack(side=tk.RIGHT)
 
         body = ttk.Frame(root_frame, style="Glass.TFrame", padding=12)
